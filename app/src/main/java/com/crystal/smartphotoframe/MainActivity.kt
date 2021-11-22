@@ -41,8 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun initStringPhotoFrameModeButton() {
-
+    private fun initAddPhotoButton() {
         addPhotoButton.setOnClickListener {
             when{
                 //권한이 부여되어있는지 확인
@@ -65,9 +64,18 @@ class MainActivity : AppCompatActivity() {
                     //callback-> onRequestPermissionResult
                 }
             }
-
         }
+    }
 
+    private fun initStringPhotoFrameModeButton() {
+        startPhotoFrameModeButton.setOnClickListener {
+            val intent = Intent(this, PhotoFrameActivity::class.java)
+            imageUriList.forEachIndexed{index, uri ->
+                intent.putExtra("photo${index}", uri.toString())
+            }
+            intent.putExtra("photoListSize", imageUriList.size)
+            startActivity(intent)
+        }
     }
 
     //requestPermissions 의 콜백
@@ -138,6 +146,4 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun initAddPhotoButton() {
-    }
 }
